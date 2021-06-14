@@ -105,6 +105,21 @@ function RaceScreen(){
         setIsRunning(true)
     }
 
+    const resetRace = () => {
+        setIsRunning(false)
+        setPlayer1({'name': null,'score': 0})
+        setPlayer2({'name': null,'score': 0})
+        setWinner(null)
+        setSelectedCharacter('Rick Sanchez')
+    }
+
+    let button 
+    if (isRunning || winner){
+        button = <button onClick={resetRace} >Reset race!</button>
+    } else if(player1.name && player2.name){
+        button = <button onClick={startRace} >Start race!</button>
+    }
+
     return (
         <div style={{
             display: 'flex',
@@ -112,19 +127,20 @@ function RaceScreen(){
             alignItems: 'center',
         }}>
             <h1>Race App!!</h1>
-
             {
-                player1.name && player2.name ? <button onClick={startRace} >Start race!</button>
-                :
-                <Selection 
-                    charactersList={characters} 
-                    selectedCharacter={selectedCharacter} 
-                    setSelectedCharacter={setSelectedCharacter}
-                    player1={player1}
-                    player2={player2}
-                    setPlayer1={setPlayer1}
-                    setPlayer2={setPlayer2}
-                />
+                player1.name && player2.name 
+                ? button
+                : (
+                    <Selection 
+                        charactersList={characters} 
+                        selectedCharacter={selectedCharacter} 
+                        setSelectedCharacter={setSelectedCharacter}
+                        player1={player1}
+                        player2={player2}
+                        setPlayer1={setPlayer1}
+                        setPlayer2={setPlayer2}
+                    />
+                )
             }
             <div style={{
                 display: 'flex',
